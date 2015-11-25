@@ -6,4 +6,3 @@
     cache_valid_time: 3600
   notify:
   - Update all packages to the latest version
-  changed_when: true
