@@ -1,0 +1,60 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+unless Vagrant.has_plugin?('nugrant')
+  warn "[\e[1m\e[31mERROR\e[0m]: Please run: vagrant plugin install nugrant"
+  exit -1
+end
+
+BRIDGE_NETWORK = '10.1.0.100'
+BRIDGE_NETMASK = '255.255.0.0'
+
+def setup_defaults()
+  {
+      'appserver' => {
+          'name' => 'FortNet - Application Server',
+          'cpus' => '1',
+          'memory' => '1024',
+          'customize' => ['modifyvm', :id,
+                          '--nicpromisc2', 'allow-all',
+                          '--groups', '/FortNet Reporting System'],
+          'gui' => false
+      }
+  }
+end
+
+Vagrant.configure(2) do |config|
+  config.user.defaults = setup_defaults
+
+  config.vm.define :fortnet, {:primary => true} do |ah|
+
+    ah.vm.hostname = :appserver
+    ah.vm.provision :docker
+    ah.vm.box = 'ubuntu/trusty64'
+
+    ah.vm.synced_folder './../../', '/application-host', :disabled => true # path to application
+
+    ah.vm.network :forwarded_port, guest: 9999, host: 9999
+    ah.vm.network :forwarded_port, guest: 9001, host: 9001
+
+    ah.vm.provider :virtualbox do |vb|
+      vb.name = config.user.appserver.name
+      vb.memory = config.user.appserver.memory
+      vb.cpus = config.user.appserver.cpus
+
+      vb.customize config.user.appserver.customize
+    end
+
+    ah.ssh.insert_key = false
+
+    # The following line terminates all ssh connections. Therefore
+    # Vagrant will be forced to reconnect.
+    # That's a workaround to have the docker command in the PATH and
+    # add Vagrant to the docker group by logging in/out
+    ah.vm.provision :shell, :inline => "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+
+    ah.vm.provision :ansible do |ansible|
+      ansible.playbook = "../application-host.yml"
+    end
+  end
+end

@@ -1,0 +1,6 @@
+---
+- name: Update all packages to the latest version
+  sudo: yes
+  apt:
+    upgrade: dist
+    cache_valid_time: 3600

@@ -1,0 +1,25 @@
+---
+- name: Install Supervisord
+  sudo: yes
+  apt:
+    name: supervisor
+    state: latest
+  tags:
+    - deps
+    - supervisor
+    - supervisord
+
+- name: Create supervisord config folder
+  sudo: yes
+  action: file dest=/etc/supervisor state=directory owner=root
+
+- name: Create supervisord config
+  sudo: yes
+  action: template src=etc-supervisor-supervisord.conf dest=/etc/supervisor/supervisord.conf
+
+- name: Replase supervisor starter
+  sudo: yes
+  action: template src=etc-init.d-supervisord.sh dest=/etc/init.d/supervisor
+  notify:
+  - Restarting Supervisor
+  changed_when: true
