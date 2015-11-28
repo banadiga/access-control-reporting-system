@@ -4,3 +4,4 @@
   - config.yml
   roles:
   - nginx
+  - reporting-api
