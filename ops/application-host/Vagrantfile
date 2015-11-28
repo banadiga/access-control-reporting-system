@@ -29,13 +29,15 @@ Vagrant.configure(2) do |config|
   config.vm.define :fortnet, {:primary => true} do |ah|
 
     ah.vm.hostname = :appserver
-    ah.vm.provision :docker
+    # ah.vm.provision :docker
     ah.vm.box = 'ubuntu/trusty64'
 
-    ah.vm.synced_folder './../../', '/application-host', :disabled => true # path to application
+    ah.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
 
-    ah.vm.network :forwarded_port, guest: 9999, host: 9999
-    ah.vm.network :forwarded_port, guest: 9001, host: 9001
+    ah.vm.network :forwarded_port, guest: 9001, host: 9001 #supervisor
+    ah.vm.network :forwarded_port, guest: 9999, host: 9999 #nginx
+    ah.vm.network :forwarded_port, guest: 9901, host: 9901 #reporting-api-1
+    ah.vm.network :forwarded_port, guest: 9902, host: 9902 #reporting-api-2
 
     ah.vm.provider :virtualbox do |vb|
       vb.name = config.user.appserver.name
