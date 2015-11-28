@@ -26,8 +26,8 @@ vagrant up
 
 # Available links
 
-* [Supervisor](localhost:9001)
-* [Access control reporting system](localhost:9999)
-* [Reporting api instanse](localhost:9999/api)
- * [Reporting api instanse #1](localhost:9901/manage/health)
- * [Reporting api instanse #2](localhost:9902/manage/health)
+* [Supervisor](http://localhost:9001/)
+* [Access control reporting system](http://localhost:9999/)
+* [Reporting api instanse](http://localhost:9999/api/)
+ * [Reporting api instanse #1](http://localhost:9901/manage/health)
+ * [Reporting api instanse #2](http://localhost:9902/manage/health)
