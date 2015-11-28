@@ -26,7 +26,10 @@ vagrant up
 
 # Available links
 
+To start application go to 
 * [Supervisor](http://localhost:9001/)
+
+Other links:
 * [Access control reporting system](http://localhost:9999/)
 * [Reporting api instanse](http://localhost:9999/api/)
  * [Reporting api instanse #1](http://localhost:9901/manage/health)
