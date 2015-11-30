@@ -1,0 +1,11 @@
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'data-analytic'
+}
+
+dependencies {
+    compile project(':acontrol-core')
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+}

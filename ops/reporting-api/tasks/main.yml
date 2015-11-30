@@ -1,6 +1,0 @@
----
-- name: Create supervisord config
-  sudo: yes
-  action: template src=etc-supervisor-conf.d-reporting-api.conf dest=/etc/supervisor/conf.d/reporting-api.conf
-  notify:
-  - Restarting Supervisor
