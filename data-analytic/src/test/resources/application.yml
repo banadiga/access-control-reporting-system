@@ -1,0 +1,9 @@
+server:
+    port: 0
+
+datasource:
+    path: ./data-source
+
+redis:
+    host: localhost
+    port: 6379

@@ -1,9 +1,9 @@
-package com.banadiga.acontrol.module;
+package com.banadiga.acontrol.service.module;
 
 import java.util.UUID;
 
 import lombok.Data;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 @Data
 @Builder

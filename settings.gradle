@@ -1,1 +1,1 @@
-include 'acontrol-core', 'data-import', 'data-analytic', 'report-api'
+include 'statistics-repository', 'acontrol-core', 'acontrol-service','data-import', 'data-analytic', 'report-api'

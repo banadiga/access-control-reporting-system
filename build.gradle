@@ -49,6 +49,10 @@ subprojects {
     dependencies {
         provided("org.projectlombok:lombok:1.16.6")
 
+        compile("org.springframework:spring-context:4.2.3.RELEASE")
+        compile("commons-io:commons-io:2.4")
+        compile("org.slf4j:slf4j-api:1.6.1")
+
         testCompile("junit:junit")
         testCompile("org.springframework.boot:spring-boot-starter-test")
     }

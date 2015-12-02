@@ -1,2 +1,9 @@
 logging:
     file: /var/log/acrs.log
+
+datasource:
+    path: ./data-source
+
+redis:
+    host: localhost
+    port: 6379

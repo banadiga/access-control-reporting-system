@@ -5,7 +5,8 @@ jar {
 }
 
 dependencies {
-    compile project(':acontrol-core')
+    compile project(':acontrol-service')
+    compile project(':statistics-repository')
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
 }

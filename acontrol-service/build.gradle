@@ -1,0 +1,7 @@
+jar {
+    baseName = 'acontrol-service'
+}
+
+dependencies {
+    compile project(':acontrol-core')
+}
