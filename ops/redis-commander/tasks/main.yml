@@ -1,0 +1,51 @@
+---
+- name: Install npm
+  apt: name=npm state=present
+  sudo: true
+
+- name: install redis-commander
+  sudo: true
+  npm: name=redis-commander global=yes
+
+- name: Install nodejs
+  sudo: yes
+  apt:
+    name: nodejs
+    state: present
+
+- name: Create symlink to /usr/bin/node
+  sudo: yes
+  file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
+
+- name: create nodejs group
+  sudo: yes
+  group: name=nodejs state=present system=yes
+
+- name: create nodejs user
+  sudo: yes
+  user: name=nodejs group=nodejs createhome=no shell=/bin/false system=yes state=present
+
+- name: create redis-commander user
+  sudo: yes
+  user: name=redis-commander group=nodejs createhome=no shell=/bin/false system=yes state=present
+
+- name: install init.d for redis-commander
+  sudo: true
+  get_url:
+    url: https://raw.githubusercontent.com/joeferner/redis-commander/02d4c48809a0670ebd19ebda65c9dd125d562523/dist/debian/init.d/redis-commander
+    dest: /etc/init.d/redis-commander
+    validate_certs: no
+
+- name: make exec redis-commander
+  sudo: true
+  file: path=/etc/init.d/redis-commander mode=775
+
+- name: configure runlevel links for redis-commander
+  sudo: true
+  command: update-rc.d redis-commander defaults
+
+- name: Restarting redis-commander
+  sudo: yes
+  service:
+    name: redis-commander
+    state: started

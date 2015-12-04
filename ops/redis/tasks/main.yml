@@ -1,0 +1,62 @@
+---
+- name: ensure packages installed
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - make
+    - build-essential
+    - tcl8.5
+
+- name: download latest stable redis
+  get_url: url=http://download.redis.io/redis-stable.tar.gz dest=/tmp/redis-stable.tar.gz
+
+- name: untar redis
+  command: tar zxf /tmp/redis-stable.tar.gz -C /tmp
+
+- name: build redis
+  command: make -C /tmp/redis-stable
+
+- name: create redis group
+  sudo: yes
+  group: name=redis state=present system=yes
+
+- name: create redis user
+  sudo: yes
+  user: name=redis group=redis createhome=no shell=/bin/false system=yes state=present
+
+- name: make sure that /etc/redis exists
+  sudo: yes
+  file: path=/etc/redis state=directory mode=0755
+
+- name: make sure that /var/db/redis exists
+  sudo: yes
+  file: path=/var/db/redis state=directory mode=0755 group=redis owner=redis
+
+- name: copy redis.conf file
+  sudo: yes
+  action: template src=redis.conf dest=/etc/redis/redis.conf group=redis owner=redis
+
+- name: copy custom template
+  sudo: yes
+  action: template src=redis.local.conf dest=/etc/redis/redis.local.conf group=redis owner=redis
+
+- name: installing redis binaries
+  sudo: yes
+  command: cp /tmp/redis-stable/src/{{ item }} /usr/local/bin
+  with_items:
+    - redis-server
+    - redis-cli
+    - redis-check-aof
+    - redis-check-dump
+
+- name: cleaning up build files
+  command: rm -rf /tmp/{{ item }}
+  with_items:
+    - redis-stable
+    - redis-stable.tar.gz
+
+- name: Create supervisord config
+  sudo: yes
+  action: template src=etc-supervisor-conf.d-redis.ini dest=/etc/supervisor/conf.d/redis.ini
+  notify:
+  - Restarting Supervisor

@@ -1,10 +1,10 @@
 ---
-- name: Application server
+- name: Slave server
   hosts: all
   vars_files:
   - config.yml
   roles:
   - host
-  - nginx
+  - redis
   - supervisor
-  - acontrol
+  - redis-commander

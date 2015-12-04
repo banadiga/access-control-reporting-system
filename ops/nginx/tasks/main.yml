@@ -22,6 +22,6 @@
 
 - name: Create supervisord config
   sudo: yes
-  action: template src=etc-supervisor-conf.d-nginx.conf dest=/etc/supervisor/conf.d/nginx.conf
+  action: template src=etc-supervisor-conf.d-nginx.ini dest=/etc/supervisor/conf.d/nginx.ini
   notify:
   - Restarting Supervisor

@@ -15,7 +15,7 @@
 
 - name: Create supervisord config
   sudo: yes
-  action: template src=etc-supervisor-supervisord.conf dest=/etc/supervisor/supervisord.conf
+  action: template src=etc-supervisor-supervisord.ini dest=/etc/supervisor/supervisord.ini
 
 - name: Replase supervisor starter
   sudo: yes

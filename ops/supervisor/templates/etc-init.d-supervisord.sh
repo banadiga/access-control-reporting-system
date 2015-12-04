@@ -2,7 +2,7 @@
 
 SUPERVISORD=/usr/bin/supervisord
 PIDFILE=/var/run/supervisord.pid
-OPTS="-c /etc/supervisor/supervisord.conf"
+OPTS="-c /etc/supervisor/supervisord.ini"
 
 test -x $SUPERVISORD || exit 0
 
@@ -13,7 +13,7 @@ export PATH="${PATH:+$PATH:}/usr/local/bin:/usr/sbin:/sbin"
 case "$1" in
   start)
     log_begin_msg "Starting Supervisor daemon manager..."
-    start-stop-daemon --start --background --quiet --pidfile $PIDFILE --exec $SUPERVISORD -- $OPTS || log_end_msg 1
+    start-stop-daemon --start --background --quiet --make-pidfile --pidfile $PIDFILE --exec $SUPERVISORD -- $OPTS || log_end_msg 1
     log_end_msg 0
     ;;
   stop)
@@ -24,8 +24,8 @@ case "$1" in
 
   restart|reload|force-reload)
     log_begin_msg "Restarting Supervisor daemon manager..."
-    start-stop-daemon --stop --quiet --oknodo --retry 30 --pidfile $PIDFILE
-    start-stop-daemon --start --background --quiet --pidfile $PIDFILE --exec $SUPERVISORD -- $OPTS || log_end_msg 1
+    start-stop-daemon --stop --quiet --oknodo --retry 0/30/KILL/5 --pidfile $PIDFILE &&
+    start-stop-daemon --start --background --quiet --make-pidfile --pidfile $PIDFILE --exec $SUPERVISORD -- $OPTS || log_end_msg 1
     log_end_msg 0
     ;;
 
