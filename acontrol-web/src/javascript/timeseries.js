@@ -76,8 +76,8 @@
 
     function transformData(data) {
         data.forEach(function(d) {
-            d.start_time = Date.parse("2000/1/1 " + d.start_time);
-            d.end_time = Date.parse("2000/1/1 " + d.end_time);
+            d.start_time = Date.parse("2000/1/1 " + d.startTime);
+            d.end_time = Date.parse("2000/1/1 " + d.endTime);
             return d;
         })
         return data

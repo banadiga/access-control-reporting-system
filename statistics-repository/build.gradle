@@ -4,6 +4,7 @@ jar {
 
 dependencies {
     compile project(':acontrol-core')
-    compile 'org.springframework.data:spring-data-redis:1.6.1.RELEASE'
-    compile 'redis.clients:jedis:2.4.2'
+    compile ('org.springframework.data:spring-data-redis:1.6.1.RELEASE')
+    compile ('redis.clients:jedis:2.4.2')
+    compile ('com.google.guava:guava:14.0')
 }

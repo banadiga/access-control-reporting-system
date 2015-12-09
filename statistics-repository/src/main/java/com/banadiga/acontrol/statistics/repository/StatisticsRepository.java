@@ -6,5 +6,5 @@ public interface StatisticsRepository {
 
   Statistics getStatistics();
 
-  void cout(long count);
+  void count(long count);
 }

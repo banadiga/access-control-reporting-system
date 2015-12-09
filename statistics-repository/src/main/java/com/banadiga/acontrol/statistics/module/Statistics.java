@@ -6,5 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class Statistics {
-  private long countOfrecords;
+  private long countOfRecords;
+  private long countOfSkippedRecords;
 }

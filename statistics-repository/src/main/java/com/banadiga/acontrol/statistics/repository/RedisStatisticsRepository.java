@@ -22,12 +22,12 @@ public class RedisStatisticsRepository implements StatisticsRepository {
   public Statistics getStatistics() {
     return Statistics
         .builder()
-        .countOfrecords(redisTemplate.opsForValue().get(COUNT_KEY))
+        .countOfRecords(redisTemplate.opsForValue().get(COUNT_KEY))
         .build();
   }
 
   @Override
-  public void cout(long count) {
+  public void count(long count) {
     redisTemplate.opsForValue().set(COUNT_KEY, count);
   }
 }

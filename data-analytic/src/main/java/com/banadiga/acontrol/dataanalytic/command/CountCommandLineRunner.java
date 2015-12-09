@@ -1,8 +1,8 @@
 package com.banadiga.acontrol.dataanalytic.command;
 
 import com.banadiga.acontrol.DefaultService;
-import com.banadiga.acontrol.statistics.repository.StatisticsRepository;
 import com.banadiga.acontrol.service.DataSourceStorage;
+import com.banadiga.acontrol.statistics.repository.StatisticsRepository;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -25,8 +25,8 @@ public class CountCommandLineRunner implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     int count = dataSourceStorage.count();
+    log.info("Count of records: {}", count);
 
-    log.info("CountCommandLineRunner count of records: {}", count);
-    statisticsRepository.cout(count);
+    statisticsRepository.count(count);
   }
 }
