@@ -26,11 +26,22 @@ vagrant up
 
 # Available links
 
-To start application go to 
+To get status of application go to 
 * [Supervisor](http://localhost:9001/)
 
-Other links:
-* [Access control reporting system](http://localhost:9999/)
-* [Reporting api instanse](http://localhost:9999/api/)
- * [Reporting api instanse #1](http://localhost:9901/manage/health)
- * [Reporting api instanse #2](http://localhost:9902/manage/health)
+To run data import
+* [Run import thru Supervisor](http://localhost:9001/index.html?processname=data%3Aimport&action=start)
+
+To run data analytic
+* [Run analytic thru Supervisor](http://localhost:9001/index.html?processname=data%3Aanalytic&action=start)
+
+To show report
+* [Go to access control Dashboard](http://localhost:9999/)
+
+Redis run at localhost:6379
+ * [Redis commander](http://localhost:8081/)
+
+API links:
+* [Reporting api instance](http://localhost:9999/api/)
+ * [Reporting api instance #1](http://localhost:9901/manage/health)
+ * [Reporting api instance #2](http://localhost:9902/manage/health)
