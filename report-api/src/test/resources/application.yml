@@ -1,7 +1,27 @@
 server:
     port: 0
+    contextPath: /
+    error:
+        whitelabel:
+            enabled: false
+logging:
+    file: /var/log/test-acrs.log
+
+security:
+    basic:
+        enabled: false
+    user:
+        name: admin
+        password: 123
+
+management:
+    context-path: /manage
+    security:
+        role: SUPERUSER
+        enabled: true
 
 redis:
     host: localhost
     port: 6379
     password:
+

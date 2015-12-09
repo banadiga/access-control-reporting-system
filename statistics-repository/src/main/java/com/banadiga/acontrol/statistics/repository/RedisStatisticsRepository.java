@@ -9,7 +9,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 @DefaultService
 public class RedisStatisticsRepository implements StatisticsRepository {
 
-  private static final String COUNT_KEY = "Statistics:Count";
+  private static final String STATISTICS_PREFIX = "Statistics:";
+  private static final String COUNT_KEY = "Count";
 
   private RedisTemplate<String, Long> redisTemplate;
 
@@ -19,15 +20,21 @@ public class RedisStatisticsRepository implements StatisticsRepository {
   }
 
   @Override
-  public Statistics getStatistics() {
+  public Statistics get() {
+    Long count = redisTemplate.opsForValue().get(STATISTICS_PREFIX + COUNT_KEY);
     return Statistics
         .builder()
-        .countOfRecords(redisTemplate.opsForValue().get(COUNT_KEY))
+        .countOfRecords(count == null ? 0 : count.longValue())
         .build();
   }
 
   @Override
   public void count(long count) {
-    redisTemplate.opsForValue().set(COUNT_KEY, count);
+    redisTemplate.opsForValue().set(STATISTICS_PREFIX + COUNT_KEY, count);
+  }
+
+  @Override
+  public void delete() {
+    redisTemplate.delete(STATISTICS_PREFIX + COUNT_KEY);
   }
 }

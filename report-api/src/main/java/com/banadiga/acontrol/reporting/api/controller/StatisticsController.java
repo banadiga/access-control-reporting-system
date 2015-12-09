@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StatisticsController {
 
+  public static final String STATISTICS_PATH = "/statistics";
+
   private final StatisticsRepository statisticsRepository;
 
   @DefaultService
@@ -24,11 +26,11 @@ public class StatisticsController {
     this.statisticsRepository = statisticsRepository;
   }
 
-  @RequestMapping(value = "/statistics", method = RequestMethod.GET)
+  @RequestMapping(value = STATISTICS_PATH, method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Statistics statistics() {
-    Statistics statistics = statisticsRepository.getStatistics();
+    Statistics statistics = statisticsRepository.get();
     log.info("Retrieve statistics: {}", statistics);
     return statistics;
   }
