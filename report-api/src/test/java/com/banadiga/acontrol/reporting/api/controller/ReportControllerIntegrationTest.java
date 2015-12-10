@@ -2,7 +2,9 @@ package com.banadiga.acontrol.reporting.api.controller;
 
 import com.banadiga.acontrol.DefaultService;
 import com.banadiga.acontrol.reporting.api.Application;
-import com.banadiga.acontrol.statistics.service.StatisticsService;
+import com.banadiga.acontrol.statistics.module.GeneralWorkingTimeReport;
+import com.banadiga.acontrol.statistics.module.Report;
+import com.banadiga.acontrol.statistics.service.ReportService;
 import com.jayway.restassured.RestAssured;
 
 import org.apache.http.HttpStatus;
@@ -24,17 +26,13 @@ import static org.hamcrest.Matchers.is;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-public class StatisticsControllerIntegrationTest {
-
-  private static final int TEST_COUNT = 100;
-  private static final String COUNT_OF_RECORDS_KEY = "countOfRecords";
-  private static final String COUNT_OF_SKIPPED_RECORDS_KEY = "countOfSkippedRecords";
+public class ReportControllerIntegrationTest {
 
   @Value("${local.server.port}")
   private int port;
 
   @DefaultService
-  private StatisticsService statisticsService;
+  private ReportService reportService;
 
   @Before
   public void setUp() {
@@ -44,34 +42,45 @@ public class StatisticsControllerIntegrationTest {
   @Test
   @Ignore
   public void emptyStatistics() {
-    statisticsService.delete();
+    reportService.deleteAll();
     given()
       .expect()
+        .body("size()", is(0))
         .statusCode(equalTo(HttpStatus.SC_OK))
-        .body(COUNT_OF_RECORDS_KEY, is(0))
-        .body(COUNT_OF_SKIPPED_RECORDS_KEY, is(0))
       .when()
-        .get(StatisticsController.STATISTICS_PATH);
+        .get(ReportController.REPORT_PATH);
   }
 
   @Test
-  public void countOfRecords() {
-    statisticsService.count(TEST_COUNT);
+  public void report() {
+    Report report = GeneralWorkingTimeReport.builder().build();
+    reportService.create(report);
     given()
       .expect()
         .statusCode(equalTo(HttpStatus.SC_OK))
-        .body(COUNT_OF_RECORDS_KEY, is(TEST_COUNT))
       .when()
-        .get(StatisticsController.STATISTICS_PATH);
+        .get(ReportController.REPORT_PATH + report.getKey());
   }
 
   @Test
-  public void countOfSkippedRecords() {
+  @Ignore
+  public void notExistingReport() {
+    reportService.deleteAll();
     given()
         .expect()
-        .statusCode(equalTo(HttpStatus.SC_OK))
-        .body(COUNT_OF_SKIPPED_RECORDS_KEY, is(0))
+        .statusCode(equalTo(HttpStatus.SC_NOT_FOUND))
         .when()
-        .get(StatisticsController.STATISTICS_PATH);
+        .get(ReportController.REPORT_PATH + "not-existing-report");
+  }
+
+  @Test
+  public void reports() {
+    reportService.create(GeneralWorkingTimeReport.builder().build());
+    given()
+      .expect()
+        .body("size()", is(1))
+        .statusCode(equalTo(HttpStatus.SC_OK))
+      .when()
+        .get(ReportController.REPORT_PATH);
   }
 }

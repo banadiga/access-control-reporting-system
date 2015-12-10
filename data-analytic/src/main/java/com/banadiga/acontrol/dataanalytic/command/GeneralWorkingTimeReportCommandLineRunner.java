@@ -5,7 +5,7 @@ import com.banadiga.acontrol.dataanalytic.service.ReportConverterService;
 import com.banadiga.acontrol.service.ReportStorage;
 import com.banadiga.acontrol.service.module.GeneralWorkingTime;
 import com.banadiga.acontrol.statistics.module.Report;
-import com.banadiga.acontrol.statistics.repository.ReportRepository;
+import com.banadiga.acontrol.statistics.service.ReportService;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,13 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 public class GeneralWorkingTimeReportCommandLineRunner implements CommandLineRunner {
 
   private final ReportStorage reportStorage;
-  private final ReportRepository reportRepository;
+  private final ReportService reportService;
   private final ReportConverterService reportConverter;
 
   @DefaultService
-  public GeneralWorkingTimeReportCommandLineRunner(ReportStorage reportStorage, ReportRepository statisticsRepository, ReportConverterService reportConverter) {
+  public GeneralWorkingTimeReportCommandLineRunner(ReportStorage reportStorage, ReportService reportService, ReportConverterService reportConverter) {
     this.reportStorage = reportStorage;
-    this.reportRepository = statisticsRepository;
+    this.reportService = reportService;
     this.reportConverter = reportConverter;
   }
 
@@ -35,6 +35,6 @@ public class GeneralWorkingTimeReportCommandLineRunner implements CommandLineRun
     Report report = reportConverter.converter(generalWorkingTime);
     log.info("Report {}: {}", report.getKey(), report);
 
-    reportRepository.create(report);
+    reportService.create(report);
   }
 }

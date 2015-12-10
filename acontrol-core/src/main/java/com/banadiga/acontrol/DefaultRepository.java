@@ -2,7 +2,7 @@ package com.banadiga.acontrol;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Autowired
-@Qualifier("default-service")
-@Service
-public @interface DefaultService {
+@Qualifier("default-repository")
+@Repository
+public @interface DefaultRepository {
 }

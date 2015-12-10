@@ -2,7 +2,7 @@ package com.banadiga.acontrol.reporting.api.controller;
 
 import com.banadiga.acontrol.DefaultService;
 import com.banadiga.acontrol.statistics.module.Report;
-import com.banadiga.acontrol.statistics.repository.ReportRepository;
+import com.banadiga.acontrol.statistics.service.ReportService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,32 +18,33 @@ import javax.validation.constraints.NotNull;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
 @Slf4j
-@RequestMapping(value = "/reports")
+@RestController
+@RequestMapping(value = ReportController.REPORT_PATH)
 public class ReportController {
+  public static final String REPORT_PATH = "/reports/";
 
-  private final ReportRepository reportRepository;
+  private final ReportService reportService;
 
   @DefaultService
-  public ReportController(ReportRepository reportRepository) {
-    this.reportRepository = reportRepository;
+  public ReportController(ReportService reportService) {
+    this.reportService = reportService;
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @RequestMapping(method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Collection<String> reports() {
-    Collection<String> names = reportRepository.findNames();
+    Collection<String> names = reportService.findNames();
     log.info("Retrieve names: {}", names);
     return names;
   }
 
-  @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+  @RequestMapping(value = "{name}", method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Report report(@PathVariable @NotNull String name) {
-    Report report = reportRepository.findByName(name);
+    Report report = reportService.findByName(name);
     log.info("Retrieve report by mame {}: {}", name, report);
     return report;
   }

@@ -2,7 +2,7 @@ package com.banadiga.acontrol.dataanalytic.command;
 
 import com.banadiga.acontrol.DefaultService;
 import com.banadiga.acontrol.service.DataSourceStorage;
-import com.banadiga.acontrol.statistics.repository.StatisticsRepository;
+import com.banadiga.acontrol.statistics.service.StatisticsService;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,12 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 public class CountCommandLineRunner implements CommandLineRunner {
 
   private final DataSourceStorage dataSourceStorage;
-  private final StatisticsRepository statisticsRepository;
+  private final StatisticsService statisticsService;
 
   @DefaultService
-  public CountCommandLineRunner(DataSourceStorage dataSourceStorage, StatisticsRepository statisticsRepository) {
+  public CountCommandLineRunner(DataSourceStorage dataSourceStorage, StatisticsService statisticsService) {
     this.dataSourceStorage = dataSourceStorage;
-    this.statisticsRepository = statisticsRepository;
+    this.statisticsService = statisticsService;
   }
 
   @Override
@@ -27,6 +27,6 @@ public class CountCommandLineRunner implements CommandLineRunner {
     int count = dataSourceStorage.count();
     log.info("Count of records: {}", count);
 
-    statisticsRepository.count(count);
+    statisticsService.count(count);
   }
 }
