@@ -9,7 +9,7 @@ public interface Repository<K, V> {
 
   void set(K key, V value);
 
-  Collection<K> keys(K pattern);
+  Collection<K> keys(byte[] pattern);
 
   void delete(K key);
 

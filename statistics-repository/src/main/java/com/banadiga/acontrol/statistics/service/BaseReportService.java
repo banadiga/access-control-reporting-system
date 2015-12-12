@@ -23,7 +23,7 @@ public class BaseReportService implements ReportService {
 
   @Override
   public Collection<String> findNames() {
-    return reportRepository.keys(REPORTS_PREFIX);
+    return reportRepository.keys(REPORTS_PREFIX.getBytes());
   }
 
   @Override

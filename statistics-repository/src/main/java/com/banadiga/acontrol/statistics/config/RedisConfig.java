@@ -10,6 +10,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.StringUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 public class RedisConfig {
 
@@ -24,11 +27,12 @@ public class RedisConfig {
 
   @Bean
   public JedisConnectionFactory jedisConnectionFactory() {
+    log.error("|{},{},{}|",redisHost, redisPort, password);
     JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
 
     jedisConnectionFactory.setHostName(redisHost);
     jedisConnectionFactory.setPort(redisPort);
-
+//
     if (StringUtils.hasLength(password)) {
       jedisConnectionFactory.setPassword(password);
     }

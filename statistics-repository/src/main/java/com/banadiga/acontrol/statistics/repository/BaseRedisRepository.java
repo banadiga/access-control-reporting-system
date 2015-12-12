@@ -18,7 +18,7 @@ public abstract class BaseRedisRepository<K, V> implements Repository<K, V> {
 
   @Override
   public Optional<V> get(K key) {
-    return Optional.of(redisTemplate.opsForValue().get(key));
+    return Optional.ofNullable(redisTemplate.opsForValue().get(key));
   }
 
   @Override
@@ -27,18 +27,17 @@ public abstract class BaseRedisRepository<K, V> implements Repository<K, V> {
   }
 
   @Override
-  public Collection<K> keys(K pattern) {
-    Set<K> result = new HashSet<>();
+  public Collection<K> keys(byte[] pattern) {
+    Set<K> result = new HashSet<K>();
 
     Iterator<byte[]> it = redisTemplate.getConnectionFactory()
         .getConnection()
-        .keys((pattern.toString()).getBytes())
+        .keys(pattern)
         .iterator();
 
-    int patternLength = pattern.toString().length();
     while (it.hasNext()) {
       byte[] data = it.next();
-      result.add((K) (new String(data, patternLength, data.length - patternLength))); // FIXME
+      result.add((K) (new String(data, 0, data.length))); // FIXME
     }
 
     return result;
@@ -51,7 +50,7 @@ public abstract class BaseRedisRepository<K, V> implements Repository<K, V> {
 
   @Override
   public void deleteAll() {
-    Collection<K> keys = keys((K) ("*")); // FIXME
+    Collection<K> keys = keys("*".getBytes()); // FIXME
     keys.stream().forEach(k -> delete(k));
   }
 }

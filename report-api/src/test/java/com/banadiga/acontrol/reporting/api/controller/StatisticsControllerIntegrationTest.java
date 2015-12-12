@@ -1,29 +1,23 @@
 package com.banadiga.acontrol.reporting.api.controller;
 
 import com.banadiga.acontrol.DefaultService;
-import com.banadiga.acontrol.reporting.api.Application;
+import com.banadiga.acontrol.reporting.api.ApiIntegrationTest;
 import com.banadiga.acontrol.statistics.service.StatisticsService;
 import com.jayway.restassured.RestAssured;
 
 import org.apache.http.HttpStatus;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
-@IntegrationTest("server.port:0")
+@ApiIntegrationTest
 public class StatisticsControllerIntegrationTest {
 
   private static final int TEST_COUNT = 100;
@@ -42,7 +36,6 @@ public class StatisticsControllerIntegrationTest {
   }
 
   @Test
-  @Ignore
   public void emptyStatistics() {
     statisticsService.delete();
     given()
