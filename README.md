@@ -1,6 +1,18 @@
 Access control reporting system
 ====
 
+# Set up dev env
+
+* To start application host:
+
+```bash
+cd ops/application-host
+vagrant up
+```
+
+**known problems**
+* Re-provision will be failed
+
 # Setup dev evn
 
 On UNIX-like operating systems, the following Bash shell command will enable the Daemon for the current user:
@@ -13,15 +25,6 @@ touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/
 
 ```bash
 gradle clean build
-```
-
-# Set up env
-
-* To start application host:
-
-```bash
-cd ops/application-host
-vagrant up
 ```
 
 # Available links

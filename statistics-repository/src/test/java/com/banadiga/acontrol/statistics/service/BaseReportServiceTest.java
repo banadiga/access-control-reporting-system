@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 public class BaseReportServiceTest {
@@ -49,12 +50,10 @@ public class BaseReportServiceTest {
   }
 
   @Test
-  public void canNotfindByName() {
-    Report report = TestReport.builder().build();
-
+  public void canNotFindByName() {
     thrown.expect(ResourceNotFoundException.class);
-    thrown.expectMessage("Repoert with name " + report.getKey() + " not found");
-
+    thrown.expectMessage(containsString("not found"));
+    Report report = TestReport.builder().build();
 
     Mockito.when(reportRepository.get(REPORT_PREFIX + report.getKey())).thenReturn(Optional.ofNullable(null));
 

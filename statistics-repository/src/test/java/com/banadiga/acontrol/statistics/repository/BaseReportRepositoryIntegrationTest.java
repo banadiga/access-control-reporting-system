@@ -13,8 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @IntegrationTestContext
 public class BaseReportRepositoryIntegrationTest extends BaseRedisRepositoryIntegrationTest<String, Report> {
-  private static final String KEY = "keys:key";
-  private static final byte[] KEY_PATTERN = "keys:*".getBytes();
+  private static final String KEY = "Reports:key";
+  private static final byte[] KEY_PATTERN = "Reports:*".getBytes();
   private static final Report VALUE = TestReport.builder().build();
 
   @DefaultRepository

@@ -1,5 +1,6 @@
 package com.banadiga.acontrol.statistics.repository;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -68,5 +69,10 @@ public abstract class BaseRedisRepositoryIntegrationTest<K, V> {
 
     assertThat(actual, notNullValue());
     assertThat(actual.size(), is(0));
+  }
+
+  @After
+  public void afterClass() {
+    getRepository().deleteAll();
   }
 }

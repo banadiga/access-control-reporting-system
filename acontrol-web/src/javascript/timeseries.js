@@ -79,7 +79,7 @@
             d.start_time = Date.parse("2000/1/1 " + d.startTime);
             d.end_time = Date.parse("2000/1/1 " + d.endTime);
             return d;
-        })
+        });
         return data
     }
 

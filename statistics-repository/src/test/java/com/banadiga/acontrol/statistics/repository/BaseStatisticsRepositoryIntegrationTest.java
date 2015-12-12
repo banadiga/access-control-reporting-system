@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @IntegrationTestContext
 public class BaseStatisticsRepositoryIntegrationTest extends BaseRedisRepositoryIntegrationTest<String, Long> {
 
-  private static final String KEY = "keys:key";
-  private static final byte[] KEY_PATTERN = "keys:*".getBytes();
+  private static final String KEY = "Statistics:key";
+  private static final byte[] KEY_PATTERN = "Statistics:*".getBytes();
   private static final Long VALUE = 123L;
 
   @DefaultRepository
