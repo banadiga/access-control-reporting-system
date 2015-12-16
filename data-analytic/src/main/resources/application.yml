@@ -1,7 +1,7 @@
 logging:
     file: /var/log/acrs.log
 
-datasource:
+parquet:
     path: ./data-source
 
 redis:

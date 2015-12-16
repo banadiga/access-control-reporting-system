@@ -4,4 +4,20 @@ jar {
 
 dependencies {
     compile project(':acontrol-core')
+
+    compile('joda-time:joda-time:2.3')
+    compile('joda-time:joda-time:2.3')
+
+    compile('org.apache.spark:spark-sql_2.10:1.5.2')
+
+    compile('org.apache.spark:spark-core_2.10:1.5.2') {
+        exclude module: 'com.fasterxml.jackson.core'
+        exclude module: 'com.fasterxml.jackson.module'
+        exclude module: 'com.fasterxml.jackson.datatype'
+    }
+
+    compile('com.fasterxml.jackson.core:jackson-core:2.6.3')
+    compile('com.fasterxml.jackson.module:jackson-module-paranamer:2.6.3')
+    compile('com.fasterxml.jackson.module:jackson-module-scala_2.10:2.6.3')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-guava:2.6.3')
 }

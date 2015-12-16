@@ -7,6 +7,11 @@ jar {
 dependencies {
     compile project(':acontrol-service')
     compile project(':statistics-repository')
-    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-actuator") {
+        exclude module: 'spring-boot-starter-logging'
+        exclude module: 'com.fasterxml.jackson.core'
+        exclude module: 'com.fasterxml.jackson.module'
+        exclude module: 'com.fasterxml.jackson.datatype'
+    }
 
 }

@@ -1,11 +1,12 @@
 package com.banadiga.acontrol.dataanalytic.service;
 
 
-import com.banadiga.acontrol.DefaultService;
-import com.banadiga.acontrol.service.module.GeneralWorkingTime;
+import com.banadiga.acontrol.engine.module.GeneralWorkingTime;
 import com.banadiga.acontrol.statistics.module.GeneralWorkingTimeReport;
 import com.banadiga.acontrol.statistics.module.Report;
 import com.banadiga.acontrol.statistics.module.gwt.One;
+
+import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -15,7 +16,7 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.UUID;
 
-@DefaultService
+@Service
 public class RandomReportConverterService implements ReportConverterService {
 
   @Override
