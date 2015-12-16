@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = StatisticsController.STATISTICS_PATH)
 public class StatisticsController {
-
   public static final String STATISTICS_PATH = "/statistics/";
 
   private final StatisticsService statisticsService;

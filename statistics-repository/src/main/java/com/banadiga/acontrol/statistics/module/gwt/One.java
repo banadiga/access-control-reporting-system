@@ -10,6 +10,6 @@ import lombok.Data;
 public class One implements Serializable {
   private String startTime;
   private String endTime;
-  private int amount;
+  private long amount;
 
 }
