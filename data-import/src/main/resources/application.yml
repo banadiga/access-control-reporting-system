@@ -1,5 +1,3 @@
-logging:
-    file: /var/log/acrs.log
-
-datasource:
-    path: ./data-source
+import:
+    source: ./test-data/visit.txt
+    destination: ./test-data/parquet.out
