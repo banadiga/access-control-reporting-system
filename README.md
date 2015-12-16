@@ -27,6 +27,26 @@ touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/
 gradle clean build
 ```
 
+# Demo
+
+To load test data: 
+
+Login to application-hos:
+
+```bash
+cd ops/application-host
+vagrant ssh
+```
+
+Run demo provision script in application-host:
+
+```bash
+sh /application-host/ops/demo-provision.sh
+```
+
+**known problems**
+* Re-provision can be failed
+
 # Available links
 
 To get status of application go to 
