@@ -7,20 +7,15 @@ jar {
 dependencies {
     compile project(':statistics-repository')
 
-    // tag::jetty[]
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
     }
-    compile("org.springframework.boot:spring-boot-starter-security")
+    compile('org.springframework.boot:spring-boot-starter-security')
 
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    // end::jetty[]
+    compile('org.springframework.boot:spring-boot-starter-jetty')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
 
-    // tag::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
-
-    testCompile("com.jayway.restassured:rest-assured:1.6")
-    testCompile("org.codehaus.groovy:groovy-json:2.4.5")
-    testCompile("org.springframework:spring-test:4.2.3.RELEASE")
+    testCompile('com.jayway.restassured:rest-assured')
+    testCompile('org.codehaus.groovy:groovy-json')
+    testCompile('org.springframework:spring-test')
 }
