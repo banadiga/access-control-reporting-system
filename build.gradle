@@ -58,11 +58,6 @@ subprojects {
         testCompile("org.mockito:mockito-all:2.0.2-beta")
     }
 
-    idea {
-        module {
-            scopes.PROVIDED.plus += [configurations.provided]
-        }
-    }
     test {
         testLogging {
             exceptionFormat "short" // short | full

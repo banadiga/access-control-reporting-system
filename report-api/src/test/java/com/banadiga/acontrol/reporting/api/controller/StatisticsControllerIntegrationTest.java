@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.reporting.api.controller;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.reporting.api.ApiIntegrationTest;
 import com.banadiga.acontrol.statistics.service.StatisticsService;
 import com.jayway.restassured.RestAssured;

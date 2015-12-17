@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.dataimport.service;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.dataimport.module.Event;
 import com.banadiga.acontrol.engine.service.DateTimeService;
 

@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.statistics.repository;
 
-import com.banadiga.acontrol.DefaultRepository;
+import com.banadiga.acontrol.core.DefaultRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

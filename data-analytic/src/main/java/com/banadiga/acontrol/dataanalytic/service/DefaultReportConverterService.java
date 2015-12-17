@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.dataanalytic.service;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.engine.module.GeneralWorkingTime;
 import com.banadiga.acontrol.statistics.module.GeneralWorkingTimeReport;
 import com.banadiga.acontrol.statistics.module.Report;

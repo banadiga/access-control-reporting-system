@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.engine.service;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 
 import org.joda.time.format.DateTimeFormat;
 

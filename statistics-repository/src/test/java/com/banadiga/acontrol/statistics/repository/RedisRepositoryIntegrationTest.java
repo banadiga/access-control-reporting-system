@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.statistics.repository;
 
-import com.banadiga.acontrol.DefaultRepository;
+import com.banadiga.acontrol.core.DefaultRepository;
 import com.banadiga.acontrol.statistics.module.TestReport;
 import com.banadiga.acontrol.test.IntegrationTestContext;
 

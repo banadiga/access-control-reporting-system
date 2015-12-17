@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.dataanalytic.command;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.engine.service.DataSourceService;
 import com.banadiga.acontrol.statistics.service.StatisticsService;
 

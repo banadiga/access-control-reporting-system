@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.dataimport.command;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.dataimport.service.ImportService;
 
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.engine.service;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.engine.module.GeneralWorkingTime;
 
 import org.apache.commons.io.FileUtils;

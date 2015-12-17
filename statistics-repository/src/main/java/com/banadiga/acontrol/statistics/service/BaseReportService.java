@@ -1,7 +1,7 @@
 package com.banadiga.acontrol.statistics.service;
 
-import com.banadiga.acontrol.DefaultRepository;
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultRepository;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.statistics.exception.ResourceNotFoundException;
 import com.banadiga.acontrol.statistics.module.Report;
 import com.banadiga.acontrol.statistics.repository.ReportRepository;

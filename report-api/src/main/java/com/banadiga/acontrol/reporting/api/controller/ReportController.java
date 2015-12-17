@@ -1,6 +1,6 @@
 package com.banadiga.acontrol.reporting.api.controller;
 
-import com.banadiga.acontrol.DefaultService;
+import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.statistics.module.Report;
 import com.banadiga.acontrol.statistics.service.ReportService;
 
