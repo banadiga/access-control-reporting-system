@@ -59,9 +59,9 @@ public class ReportControllerIntegrationTest {
   public void notExistingReport() {
     reportService.deleteAll();
     given()
-        .expect()
+      .expect()
         .statusCode(equalTo(HttpStatus.SC_NOT_FOUND))
-        .when()
+      .when()
         .get(ReportController.REPORT_PATH + "not-existing-report");
   }
 

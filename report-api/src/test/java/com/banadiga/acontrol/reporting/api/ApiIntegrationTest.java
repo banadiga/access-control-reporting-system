@@ -10,12 +10,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 
-@SpringApplicationConfiguration(classes = Application.class)
+
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
+@SpringApplicationConfiguration(classes = Application.class)
 public @interface ApiIntegrationTest {
 }

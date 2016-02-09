@@ -19,7 +19,6 @@ public abstract class BaseRedisRepositoryIntegrationTest<K, V> {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-
   protected abstract K getKey();
   protected abstract byte[] getKeyPattern();
 

@@ -26,7 +26,6 @@ import scala.Tuple2;
 @DefaultService
 public class ParquetDataAnalyticService extends AbstractSparkTask implements DataAnalyticService {
 
-
   @Override
   public GeneralWorkingTime getGeneralWorkingTime() throws IOException {
     log.info("Calculation GeneralWorkingTime...");
@@ -56,11 +55,11 @@ public class ParquetDataAnalyticService extends AbstractSparkTask implements Dat
 
     Collection<GeneralWorkingTime.OneA> data = new ArrayList<GeneralWorkingTime.OneA>(Math.round(stringLongJavaPairRDD1.count())); // FIXME
 
-    stringLongJavaPairRDD1.toArray().stream().forEach(e ->data.add(
-        GeneralWorkingTime.OneA.builder()
-            .key(e._1())
-            .val(e._2())
-            .build()
+    stringLongJavaPairRDD1.toArray().stream().forEach(e -> data.add(
+            GeneralWorkingTime.OneA.builder()
+                .key(e._1())
+                .val(e._2())
+                .build()
         )
     );
 

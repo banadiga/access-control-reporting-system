@@ -61,10 +61,10 @@ public class StatisticsControllerIntegrationTest {
   @Test
   public void countOfSkippedRecords() {
     given()
-        .expect()
+      .expect()
         .statusCode(equalTo(HttpStatus.SC_OK))
         .body(COUNT_OF_SKIPPED_RECORDS_KEY, is(0))
-        .when()
+      .when()
         .get(StatisticsController.STATISTICS_PATH);
   }
 }
