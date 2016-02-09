@@ -1,3 +1,6 @@
 ---
 username: admin
 password: 123
+redismasterhost: 10.1.0.100
+redismasterport: 6000
+redisslavecount: 2

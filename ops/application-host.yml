@@ -5,6 +5,8 @@
   - config.yml
   roles:
   - host
-  - nginx
   - supervisor
+  - redis-master
+  - redis-commander
+  - nginx
   - acontrol

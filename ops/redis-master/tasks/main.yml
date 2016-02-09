@@ -34,7 +34,7 @@
 
 - name: copy redis.conf file
   sudo: yes
-  action: template src=redis.conf dest=/etc/redis/redis.conf group=redis owner=redis
+  action: template src=redis.conf.ini dest=/etc/redis/redis.conf group=redis owner=redis
 
 - name: copy custom template
   sudo: yes

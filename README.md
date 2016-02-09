@@ -57,13 +57,23 @@ sh /application-host/ops/demo-provision.sh
 
 ## Available links
 
-* To get status of application go to [Supervisor](http://localhost:9001/)
+* To get status of application go to [Supervisor](http://localhost:9000/)
 * To run data import go to [Run import thru Supervisor](http://localhost:9001/index.html?processname=data%3Aimport&action=start)
 * To run data analytic go to [Run analytic thru Supervisor](http://localhost:9001/index.html?processname=data%3Aanalytic&action=start)
 * To show report go to [Access control Dashboard](http://localhost:9999/)
-* Redis run at localhost:6379
- * [Redis commander](http://localhost:8081/)
-* API links:
-* [Reporting api instance](http://localhost:9999/api/)
- * [Reporting api instance #1](http://localhost:9901/manage/health)
- * [Reporting api instance #2](http://localhost:9902/manage/health)
+* Mater Redis run at localhost:6000
+
+* Application server:
+ * [Supervisor](http://localhost:9000/)
+ * [Access control Dashboard](http://localhost:9999/)
+ * [Reporting api instance](http://localhost:9999/api/)
+ * [Mater Redis commander](http://localhost:6100/)
+* Application slaves:
+ * Slaves #1
+  * [Supervisor for slaves #1](http://localhost:9001/)
+  * [Redis Slave #1 commander](http://localhost:6101/)
+  * [Reporting api instance #1](http://localhost:9901/manage/health)
+ * Slaves #2
+  * [Supervisor for slaves #2](http://localhost:9002/)
+  * [Redis Slave #2 commander](http://localhost:6102/)
+  * [Reporting api instance #2](http://localhost:9902/manage/health)

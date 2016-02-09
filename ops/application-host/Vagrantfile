@@ -7,39 +7,56 @@ unless Vagrant.has_plugin?('nugrant')
 end
 
 BRIDGE_NETWORK = '10.1.0.100'
+SVALE_NETWORK = '10.1.0.%s'
 BRIDGE_NETMASK = '255.255.0.0'
 
 def setup_defaults()
   {
       'appserver' => {
-          'name' => 'FortNet - Application Server',
+          'name' => 'aControl - Application Server',
           'cpus' => '1',
-          'memory' => '6144',
-          'customize' => ['modifyvm', :id,
-                          '--nicpromisc2', 'allow-all',
-                          '--groups', '/FortNet Reporting System'],
-          'gui' => false
-      }
+          'memory' => '6144'
+      },
+      'slave' => {
+          'instances' => 2,
+          'name' => 'aControl - Application Slave',
+          'cpus' => '1',
+          'memory' => '1024'
+      },
+      'customize' => ['modifyvm', :id,
+                      '--nicpromisc2', 'allow-all',
+                      '--groups', '/aControl Reporting System'],
+      'gui' => false
   }
 end
+
+NODE_COUNT = 4
 
 Vagrant.configure(2) do |config|
   config.user.defaults = setup_defaults
 
-  config.vm.define :fortnet, {:primary => true} do |ah|
+  config.vm.define :appserver, {:primary => true} do |ah|
 
     ah.vm.hostname = :appserver
-    # ah.vm.provision :docker
     ah.vm.box = 'ubuntu/trusty64'
 
     ah.vm.synced_folder './../../acontrol-web/src', '/usr/share/nginx/web', :disabled => false # path to application
     ah.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
 
-    ah.vm.network :forwarded_port, guest: 9001, host: 9001 #supervisor
-    ah.vm.network :forwarded_port, guest: 6379, host: 6379 #redis
-    ah.vm.network :forwarded_port, guest: 8081, host: 8081 #redis-commander
-    ah.vm.network :forwarded_port, guest: 8080, host: 8080 #Spark
+    ah.vm.network :private_network, :ip => BRIDGE_NETWORK, :netmask => BRIDGE_NETMASK
+
+    ah.vm.network :forwarded_port, guest: 22, host: 2220, id: "ssh" #ssh
+
+    ah.vm.network :forwarded_port, guest: 9001, host: 9000 #supervisor
+
     ah.vm.network :forwarded_port, guest: 9999, host: 9999 #nginx
+
+    # Master redis
+    ah.vm.network :forwarded_port, guest: 6379, host: 6379 #redis
+    ah.vm.network :forwarded_port, guest: 8081, host: 6100 #redis-commander
+
+    ah.vm.network :forwarded_port, guest: 8080, host: 8080 #Spark
+
     ah.vm.network :forwarded_port, guest: 9901, host: 9901 #reporting-api-1
     ah.vm.network :forwarded_port, guest: 9902, host: 9902 #reporting-api-2
 
@@ -48,7 +65,7 @@ Vagrant.configure(2) do |config|
       vb.memory = config.user.appserver.memory
       vb.cpus = config.user.appserver.cpus
 
-      vb.customize config.user.appserver.customize
+      vb.customize config.user.customize
     end
 
     # The following line terminates all ssh connections. Therefore
@@ -60,9 +77,42 @@ Vagrant.configure(2) do |config|
     ah.vm.provision :ansible do |ansible|
       ansible.playbook = "../application-host.yml"
     end
+  end
 
-    ah.vm.provision :ansible do |ansible|
-      ansible.playbook = "../slave-host.yml"
+  1.upto(config.user.slave.instances) do |slave|
+    config.vm.define "slave#{slave}", {:primary => false} do |sl|
+
+      sl.vm.hostname = "slaveserve#{slave}"
+      sl.vm.box = 'ubuntu/trusty64'
+
+      sl.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
+
+      sl.vm.network :private_network, :ip => SVALE_NETWORK % [200 + slave], :netmask => BRIDGE_NETMASK
+
+      sl.vm.network :forwarded_port, guest: 22, host: 2220 + slave, id: "ssh" #ssh
+      sl.vm.network :forwarded_port, guest: 9001, host: 9000 + slave #supervisor
+
+      # slave redis
+      sl.vm.network :forwarded_port, guest: 6379, host: 6000 + slave #redis
+      sl.vm.network :forwarded_port, guest: 8081, host: 6100 + slave #redis-commander
+
+      sl.vm.provider :virtualbox do |vb|
+        vb.name = "#{config.user.slave.name} #{slave}"
+        vb.memory = config.user.slave.memory
+        vb.cpus = config.user.slave.cpus
+
+        vb.customize config.user.customize
+      end
+
+      # The following line terminates all ssh connections. Therefore
+      # Vagrant will be forced to reconnect.
+      # That's a workaround to have the docker command in the PATH and
+      # add Vagrant to the docker group by logging in/out
+      sl.vm.provision :shell, :inline => "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+
+      sl.vm.provision :ansible do |ansible|
+        ansible.playbook = "../slave-host.yml"
+      end
     end
   end
 end

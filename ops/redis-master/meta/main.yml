@@ -1,4 +1,4 @@
 ---
 dependencies:
   - host
-  - redis-master
+  - supervisor
