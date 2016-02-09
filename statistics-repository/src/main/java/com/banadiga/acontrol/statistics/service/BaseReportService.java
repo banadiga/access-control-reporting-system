@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @DefaultService
 public class BaseReportService implements ReportService {
-  private final static String REPORT_PREFIX = "Reposrts:";
-  private final static String REPORTS_PREFIX = REPORT_PREFIX + "*";
+  private static final String REPORT_PREFIX = "Reposrts:";
+  private static final String REPORTS_PREFIX = REPORT_PREFIX + "*";
 
   private ReportRepository reportRepository;
 

@@ -2,8 +2,8 @@ package com.banadiga.acontrol.dataanalytic.command;
 
 import com.banadiga.acontrol.core.DefaultService;
 import com.banadiga.acontrol.dataanalytic.service.ReportConverterService;
-import com.banadiga.acontrol.engine.service.DataAnalyticService;
 import com.banadiga.acontrol.engine.module.GeneralWorkingTime;
+import com.banadiga.acontrol.engine.service.DataAnalyticService;
 import com.banadiga.acontrol.statistics.module.Report;
 import com.banadiga.acontrol.statistics.service.ReportService;
 

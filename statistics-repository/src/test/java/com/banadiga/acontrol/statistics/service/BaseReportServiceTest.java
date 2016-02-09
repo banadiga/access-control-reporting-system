@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class BaseReportServiceTest {
 
-  private final static String REPORT_PREFIX = "Reposrts:";
+  private static final String REPORT_PREFIX = "Reposrts:";
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
