@@ -18,7 +18,7 @@ def setup_defaults()
           'memory' => '6144'
       },
       'slave' => {
-          'instances' => 2,
+          'instances' => 1,
           'name' => 'aControl - Application Slave',
           'cpus' => '1',
           'memory' => '1024'
@@ -34,6 +34,9 @@ NODE_COUNT = 4
 
 Vagrant.configure(2) do |config|
   config.user.defaults = setup_defaults
+
+  # Enable ssh forward agent
+  config.ssh.forward_agent = true
 
   config.vm.define :appserver, {:primary => true} do |ah|
 
@@ -80,9 +83,9 @@ Vagrant.configure(2) do |config|
   end
 
   1.upto(config.user.slave.instances) do |slave|
-    config.vm.define "slave#{slave}", {:primary => false} do |sl|
+    config.vm.define "slave-#{slave}", {:primary => false} do |sl|
 
-      sl.vm.hostname = "slaveserve#{slave}"
+      sl.vm.hostname = "slave-#{slave}"
       sl.vm.box = 'ubuntu/trusty64'
 
       sl.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
