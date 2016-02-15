@@ -1,0 +1,27 @@
+---
+system
+  - name: ubuntu/trusty64
+  - gui: false
+app
+  - name: aControl - Application Server
+  - nerwork: 10.1.0.10
+  - netmask: 255.255.0.0
+  - box:
+    - cpus: 1
+    - memory: 6144
+slave
+  - name: aControl - Application Slave
+  - instances: 2
+  - nerwork: 10.1.0.100
+  - netmask: 255.255.0.0
+  - box:
+    - cpus: 1
+    - memory: 1024
+worker
+  - name: aControl - Application Worker
+  - instances: 2
+  - nerwork: 10.1.0.200
+  - netmask: 255.255.0.0
+  - box:
+    - cpus: 2
+    - memory: 2048
