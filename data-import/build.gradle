@@ -7,9 +7,9 @@ jar {
 dependencies {
     compile project(':acontrol-service')
 
-    compile('org.apache.spark:spark-sql_2.10:1.5.2')
+    compile('org.apache.spark:spark-sql_2.10:1.6.0')
 
-    compile('org.apache.spark:spark-core_2.10:1.5.2') {
+    compile('org.apache.spark:spark-core_2.10:1.6.0') {
         exclude module: 'com.fasterxml.jackson.core'
         exclude module: 'com.fasterxml.jackson.module'
         exclude module: 'com.fasterxml.jackson.datatype'
