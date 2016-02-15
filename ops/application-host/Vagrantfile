@@ -7,66 +7,82 @@ unless Vagrant.has_plugin?('nugrant')
 end
 
 BRIDGE_NETWORK = '10.1.0.100'
-SVALE_NETWORK = '10.1.0.%s'
+SLAVE_NETWORK = '10.1.0.%s'
 BRIDGE_NETMASK = '255.255.0.0'
 
 def setup_defaults()
   {
       'appserver' => {
           'name' => 'aControl - Application Server',
-          'cpus' => '1',
-          'memory' => '6144'
+          'cpus' => '2',
+          'memory' => '2048'
       },
       'slave' => {
-          'instances' => 1,
+          'instances' => 2,
           'name' => 'aControl - Application Slave',
           'cpus' => '1',
           'memory' => '1024'
       },
+      'worker' => {
+          'instances' => 2,
+          'name' => 'aControl - Application Worker',
+          'cpus' => '2',
+          'memory' => '2048'
+      },
       'customize' => ['modifyvm', :id,
                       '--nicpromisc2', 'allow-all',
                       '--groups', '/aControl Reporting System'],
-      'gui' => false
+      'gui' => false,
+      'box' => 'ubuntu/trusty64'
   }
 end
 
-NODE_COUNT = 4
-
 Vagrant.configure(2) do |config|
+  # Load configurations
   config.user.defaults = setup_defaults
 
   # Enable ssh forward agent
   config.ssh.forward_agent = true
 
+  # Create Application server
+  # ------------------------------------------------------------------------------------------------
   config.vm.define :appserver, {:primary => true} do |ah|
 
     ah.vm.hostname = :appserver
-    ah.vm.box = 'ubuntu/trusty64'
+    ah.vm.box = config.user.box
 
+    # Synced folders
     ah.vm.synced_folder './../../acontrol-web/src', '/usr/share/nginx/web', :disabled => false # path to application
     ah.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
 
+    # Network
     ah.vm.network :private_network, :ip => BRIDGE_NETWORK, :netmask => BRIDGE_NETMASK
 
-    ah.vm.network :forwarded_port, guest: 22, host: 2220, id: "ssh" #ssh
+    # Port for ssh
+    ah.vm.network :forwarded_port, guest: 22, host: 2220, id: "ssh" # ssh
 
-    ah.vm.network :forwarded_port, guest: 9001, host: 9000 #supervisor
+    # Supervisor
+    ah.vm.network :forwarded_port, guest: 9001, host: 9000 # supervisor
 
-    ah.vm.network :forwarded_port, guest: 9999, host: 9999 #nginx
+    # Nginx as web server and load balancer
+    ah.vm.network :forwarded_port, guest: 9999, host: 9999 # nginx
 
     # Master redis
-    ah.vm.network :forwarded_port, guest: 6379, host: 6379 #redis
-    ah.vm.network :forwarded_port, guest: 8081, host: 6100 #redis-commander
+    ah.vm.network :forwarded_port, guest: 6379, host: 6379 # redis
+    ah.vm.network :forwarded_port, guest: 8081, host: 6100 # redis-commander
 
-    ah.vm.network :forwarded_port, guest: 8080, host: 8080 #Spark
+    # Spark master
+    ah.vm.network :forwarded_port, guest: 7077, host: 7077 # stripe
+    ah.vm.network :forwarded_port, guest: 8080, host: 8080 # stripe
 
-    ah.vm.network :forwarded_port, guest: 9901, host: 9901 #reporting-api-1
-    ah.vm.network :forwarded_port, guest: 9902, host: 9902 #reporting-api-2
-
+    # VM configuration
     ah.vm.provider :virtualbox do |vb|
       vb.name = config.user.appserver.name
+
       vb.memory = config.user.appserver.memory
       vb.cpus = config.user.appserver.cpus
+
+      vb.gui = config.user.gui
 
       vb.customize config.user.customize
     end
@@ -82,27 +98,42 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  1.upto(config.user.slave.instances) do |slave|
+  # Create Application servers
+  # ------------------------------------------------------------------------------------------------
+  config.user.slave.instances.downto(1) do |slave|
+
+    # Create Application slave
     config.vm.define "slave-#{slave}", {:primary => false} do |sl|
 
       sl.vm.hostname = "slave-#{slave}"
-      sl.vm.box = 'ubuntu/trusty64'
+      sl.vm.box = config.user.box
 
+      # Synced folders
       sl.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
 
-      sl.vm.network :private_network, :ip => SVALE_NETWORK % [200 + slave], :netmask => BRIDGE_NETMASK
+      # Network
+      sl.vm.network :private_network, :ip => SLAVE_NETWORK % [200 + slave], :netmask => BRIDGE_NETMASK
 
-      sl.vm.network :forwarded_port, guest: 22, host: 2220 + slave, id: "ssh" #ssh
-      sl.vm.network :forwarded_port, guest: 9001, host: 9000 + slave #supervisor
+      # Port for ssh
+      sl.vm.network :forwarded_port, guest: 22, host: 2220 + slave, id: "ssh" # ssh
 
-      # slave redis
-      sl.vm.network :forwarded_port, guest: 6379, host: 6000 + slave #redis
-      sl.vm.network :forwarded_port, guest: 8081, host: 6100 + slave #redis-commander
+      # Supervisor
+      sl.vm.network :forwarded_port, guest: 9001, host: 9000 + slave # supervisor
 
+      # Slave redis
+      sl.vm.network :forwarded_port, guest: 6379, host: 6000 + slave # redis
+      sl.vm.network :forwarded_port, guest: 8081, host: 6100 + slave # redis-commander
+
+      sl.vm.network :forwarded_port, guest: 9900, host: 9900 + slave # reporting-api
+
+      # VM configuration
       sl.vm.provider :virtualbox do |vb|
         vb.name = "#{config.user.slave.name} #{slave}"
+
         vb.memory = config.user.slave.memory
         vb.cpus = config.user.slave.cpus
+
+        vb.gui = config.user.gui
 
         vb.customize config.user.customize
       end
@@ -115,6 +146,56 @@ Vagrant.configure(2) do |config|
 
       sl.vm.provision :ansible do |ansible|
         ansible.playbook = "../slave-host.yml"
+      end
+    end
+  end
+
+  # Create Application workers
+  # ------------------------------------------------------------------------------------------------
+  config.user.worker.instances.downto(1) do |worker|
+
+    # Create Application worker
+    config.vm.define "worker-#{worker}", {:primary => false} do |wk|
+
+      wk.vm.hostname = "worker-#{worker}"
+      wk.vm.box = config.user.box
+
+      # Synced folders
+      wk.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
+
+      # Network
+      wk.vm.network :private_network, :ip => SLAVE_NETWORK % [230 + worker], :netmask => BRIDGE_NETMASK
+
+      # Port for ssh
+      wk.vm.network :forwarded_port, guest: 22, host: 2230 + worker, id: "ssh" # ssh
+
+      # Supervisor
+      wk.vm.network :forwarded_port, guest: 9001, host: 9030 + worker # supervisor
+
+      # Spark
+      wk.vm.network :forwarded_port, guest: 8081, host: 8080 + worker # stripe
+
+
+      # VM configuration
+      wk.vm.provider :virtualbox do |vb|
+        vb.name = "#{config.user.worker.name} #{worker}"
+
+        vb.memory = config.user.worker.memory
+        vb.cpus = config.user.worker.cpus
+
+        vb.gui = config.user.gui
+
+        vb.customize config.user.customize
+      end
+
+      # The following line terminates all ssh connections. Therefore
+      # Vagrant will be forced to reconnect.
+      # That's a workaround to have the docker command in the PATH and
+      # add Vagrant to the docker group by logging in/out
+      wk.vm.provision :shell, :inline => "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+
+      wk.vm.provision :ansible do |ansible|
+        ansible.playbook = "../worker-host.yml"
       end
     end
   end

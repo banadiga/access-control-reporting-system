@@ -84,8 +84,6 @@ start_and_wait data:analytic
 
 # Start UI/api
 start nginx
-start report:api-1
-start report:api-2
 
 # Check statuses
 check_status data:import EXITED
@@ -93,9 +91,6 @@ check_status data:analytic EXITED
 
 check_status nginx RUNNING
 check_status redis RUNNING
-
-check_status report:api-1 RUNNING
-check_status report:api-2 RUNNING
 
 # Show status
 status

@@ -1,0 +1,11 @@
+---
+spark_version: spark-1.6.0-bin-hadoop2.6
+spark_mirror: http://d3kbcqa49mib13.cloudfront.net
+spark_src_dir: /usr/local/src
+spark_conf_dir: /etc/spark
+spark_usr_parent_dir: /usr/lib
+spark_usr_dir: /usr/lib/spark
+spark_lib_dir: /var/lib/spark
+spark_log_dir: /var/log/spark
+spark_run_dir: /run/spark
+spark_user: spark

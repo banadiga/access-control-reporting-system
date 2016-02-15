@@ -1,0 +1,35 @@
+---
+- name: Create service account for Spark
+  sudo: yes
+  user: name={{ spark_user }}
+        system=yes
+        home={{ spark_lib_dir }}
+        shell=/bin/false
+        state=present
+
+- name: Ensure Spark configuration directory exists
+  sudo: yes
+  file: path="{{ spark_conf_dir }}"
+        state=directory
+
+- name: Ensure Spark log and run directories exist
+  sudo: yes
+  file: path="{{ item }}"
+        owner={{ spark_user }}
+        group={{ spark_user }}
+        mode=0755
+        state=directory
+  with_items:
+    - "{{ spark_log_dir }}"
+    - "{{ spark_run_dir }}"
+
+- name: Download Spark distribution
+  sudo: yes
+  get_url: url="{{ spark_mirror }}/{{ spark_version }}.tgz" dest="{{ spark_src_dir }}/{{ spark_version }}.tgz"
+
+- name: Extract Spark distribution
+  sudo: yes
+  unarchive: src="{{ spark_src_dir }}/{{ spark_version }}.tgz"
+             dest="{{ spark_usr_parent_dir }}"
+             copy=no
+

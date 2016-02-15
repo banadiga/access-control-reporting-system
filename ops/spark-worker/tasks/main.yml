@@ -1,0 +1,6 @@
+---
+- name: Create supervisord config
+  sudo: yes
+  action: template src=etc-supervisor-conf.d-spark-worker.ini dest=/etc/supervisor/conf.d/spark-worker.ini
+  notify:
+  - Restarting Supervisor

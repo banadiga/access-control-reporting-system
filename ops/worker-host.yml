@@ -1,0 +1,9 @@
+---
+- name: Worker server
+  hosts: all
+  vars_files:
+  - config.yml
+  roles:
+  - host
+  - supervisor
+  - spark-worker
