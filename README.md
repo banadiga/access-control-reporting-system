@@ -53,7 +53,7 @@ sh /application-host/ops/demo-provision.sh
 ```
 
 **Known problems:**
-* Re-provision can be failed
+* ~~Re-provision can be failed~~
 
 ## Available links
 
