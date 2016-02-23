@@ -1,6 +1,10 @@
 ---
+- name: Create spark master executor
+  sudo: yes
+  action: template src=spark-executor.sh.j2 dest="{{ spark_lib_dir }}/spark-executor.sh" mode=0755 group={{ spark_user }} owner={{ spark_user }}
+
 - name: Create supervisord config
   sudo: yes
-  action: template src=etc-supervisor-conf.d-spark-master.ini dest=/etc/supervisor/conf.d/spark-master.ini
+  action: template src=supervisor-spark-master.ini.j2 dest="{{ supervisor_conf }}/spark-master.ini"
   notify:
   - Restarting Supervisor

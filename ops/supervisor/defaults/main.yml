@@ -1,0 +1,6 @@
+---
+supervisor_usr_dir: /etc/supervisor
+supervisor_user: supervisor
+supervisor_conf: /etc/supervisor/conf.d
+supervisor_ini: /etc/supervisor/supervisord.ini
+supervisor_initd: /etc/init.d/supervisor

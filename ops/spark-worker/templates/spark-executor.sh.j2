@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+export SPARK_LOCAL_IP=`ip addr | grep 'state UP' -A2 | grep '10.1.0.23' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'`
+
+export SPARK_MASTER_IP={{ masterhost }}
+export SPARK_MASTER_PORT=7077
+export SPARK_MASTER_WEBUI_PORT=8080
+
+export SPARK_WORKER_MEMORY=1g
+export SPARK_WORKER_CORES=1
+export SPARK_WORKER_WEBUI_PORT=8081
+
+trap 'kill -TERM $PID' TERM INT
+/usr/lib/jvm/java-8-oracle/jre/bin/java -cp /usr/lib/spark-1.6.0-bin-hadoop2.6/conf/:/usr/lib/spark-1.6.0-bin-hadoop2.6/lib/spark-assembly-1.6.0-hadoop2.6.0.jar:/usr/lib/spark-1.6.0-bin-hadoop2.6/lib/datanucleus-rdbms-3.2.9.jar:/usr/lib/spark-1.6.0-bin-hadoop2.6/lib/datanucleus-core-3.2.10.jar:/usr/lib/spark-1.6.0-bin-hadoop2.6/lib/datanucleus-api-jdo-3.2.6.jar \
+    -Xms1g \
+    -Xmx1g \
+    org.apache.spark.deploy.worker.Worker \
+    --webui-port 8081 \
+    10.1.0.100:7077 & PID=$!
+wait $PID
+trap - TERM INT
+wait $PID
+EXIT_STATUS=$?

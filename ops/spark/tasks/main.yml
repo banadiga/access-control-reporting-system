@@ -3,7 +3,7 @@
   sudo: yes
   user: name={{ spark_user }}
         system=yes
-        home={{ spark_lib_dir }}
+        home={{ spark_usr_dir }}
         shell=/bin/false
         state=present
 
@@ -21,11 +21,12 @@
         state=directory
   with_items:
     - "{{ spark_log_dir }}"
+    - "{{ spark_lib_dir }}"
     - "{{ spark_run_dir }}"
 
 - name: Download Spark distribution
   sudo: yes
-  get_url: url="{{ spark_mirror }}/{{ spark_version }}.tgz" dest="{{ spark_src_dir }}/{{ spark_version }}.tgz"
+  get_url: url="{{ spark_mirror }}/{{ spark_version }}.tgz" dest="{{ spark_src_dir }}/{{ spark_version }}.tgz" owner={{ spark_user }} group={{ spark_user }}
 
 - name: Extract Spark distribution
   sudo: yes
@@ -33,3 +34,6 @@
              dest="{{ spark_usr_parent_dir }}"
              copy=no
 
+- name: Make Spark directory tree readable
+  sudo: yes
+  file: path="{{ spark_usr_parent_dir }}/{{spark_version}}" owner={{ spark_user }} group={{ spark_user }} recurse=yes

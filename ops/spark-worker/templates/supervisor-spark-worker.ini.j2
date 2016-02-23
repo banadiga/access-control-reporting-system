@@ -1,0 +1,8 @@
+[program:spark-worker]
+command={{ spark_lib_dir }}/spark-executor.sh
+stdout_logfile={{ spark_log_dir }}/spark-worker.log
+autostart=true
+autorestart=false
+user=root
+killasgroup=true
+stopasgroup=true

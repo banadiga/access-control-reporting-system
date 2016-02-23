@@ -1,4 +1,7 @@
 ---
+include:
+  - supervisor/defaults/main.yml
+  - spark/defaults/main.yml
 dependencies:
   - host
   - supervisor
