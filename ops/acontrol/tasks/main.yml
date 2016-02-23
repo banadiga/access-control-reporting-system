@@ -1,6 +1,6 @@
 ---
 - name: Create supervisord config
   sudo: yes
-  action: template src=etc-supervisor-conf.d-acontrol.ini dest=/etc/supervisor/conf.d/acontrol.ini
+  action: template src=etc-supervisor-conf.d-acontrol.ini dest="{{ supervisor_conf }}/acontrol.ini"
   notify:
   - Restarting Supervisor

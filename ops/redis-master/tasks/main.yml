@@ -57,6 +57,6 @@
 
 - name: Create supervisord config
   sudo: yes
-  action: template src=etc-supervisor-conf.d-redis.ini dest=/etc/supervisor/conf.d/redis.ini
+  action: template src=etc-supervisor-conf.d-redis.ini dest="{{ supervisor_conf }}/redis.ini"
   notify:
   - Restarting Supervisor

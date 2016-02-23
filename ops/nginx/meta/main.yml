@@ -1,4 +1,6 @@
 ---
+include:
+  - supervisor/defaults/main.yml
 dependencies:
   - host
   - supervisor

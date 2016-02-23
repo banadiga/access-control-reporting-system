@@ -2,7 +2,7 @@
 
 SUPERVISORD=/usr/bin/supervisord
 PIDFILE=/var/run/supervisord.pid
-OPTS="-c /etc/supervisor/supervisord.ini"
+OPTS="-c {{ supervisor_ini }}"
 
 test -x $SUPERVISORD || exit 0
 
@@ -30,8 +30,7 @@ case "$1" in
     ;;
 
   *)
-    log_success_msg "Usage: /etc/init.d/supervisor
-{start|stop|reload|force-reload|restart}"
+    log_success_msg "Usage: /etc/init.d/supervisor {start|stop|reload|force-reload|restart}"
     exit 1
 esac
 

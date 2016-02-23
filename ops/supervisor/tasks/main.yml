@@ -1,4 +1,12 @@
 ---
+- name: Create service account for Supervisor
+  sudo: yes
+  user: name={{ supervisor_user }}
+        system=yes
+        home={{ supervisor_usr_dir }}
+        shell=/bin/false
+        state=present
+
 - name: Install Supervisord
   sudo: yes
   apt:
@@ -11,15 +19,15 @@
 
 - name: Create supervisord config folder
   sudo: yes
-  action: file dest=/etc/supervisor state=directory owner=root
+  action: file dest={{ supervisor_usr_dir }} owner={{ supervisor_user }} state=directory
 
 - name: Create supervisord config
   sudo: yes
-  action: template src=etc-supervisor-supervisord.ini dest=/etc/supervisor/supervisord.ini
+  action: template src=supervisord.ini.j2 dest={{ supervisor_ini }} owner={{ supervisor_user }}
 
 - name: Replase supervisor starter
   sudo: yes
-  action: template src=etc-init.d-supervisord.sh dest=/etc/init.d/supervisor
+  action: template src=supervisord.sh.j2 dest={{ supervisor_initd }} owner={{ supervisor_user }}
   notify:
   - Restarting Supervisor
   changed_when: true
