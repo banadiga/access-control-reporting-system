@@ -52,15 +52,13 @@ vagrant ssh
 sh /application-host/ops/demo-provision.sh
 ```
 
-**Known problems:**
-* ~~Re-provision can be failed~~
-
 ## Available links
 
 General:
 * To get status of application go to [Supervisor](http://localhost:9000/)
-* To run data import go to [Run import thru Supervisor](http://localhost:9001/index.html?processname=data%3Aimport&action=start)
-* To run data analytic go to [Run analytic thru Supervisor](http://localhost:9001/index.html?processname=data%3Aanalytic&action=start)
+* To run data import go to [Run import thru Supervisor](http://localhost:9000/index.html?processname=data%3Aimport&action=start)
+* To run data analytic go to [Run analytic thru Supervisor](http://localhost:9000/index.html?processname=data%3Aanalytic&action=start)
+* To start report API go to [Run Report API thru Supervisor on slave #1](http://localhost:9001/index.html?processname=report&action=start) or [Run Report API thru Supervisor on slave #2](http://localhost:9002/index.html?processname=report&action=start)
 * To show report go to [Access control Dashboard](http://localhost:9999/)
 * Mater Redis run at localhost:6000
 
@@ -69,6 +67,7 @@ Application server:
  * [Access control Dashboard](http://localhost:9999/)
  * [Reporting api instance](http://localhost:9999/api/)
  * [Mater Redis commander](http://localhost:6100/)
+ * [Spark Mater](http://localhost:8080/)
 
 Application slaves:
 * Slaves #1
@@ -80,8 +79,10 @@ Application slaves:
  * [Redis Slave #2 commander](http://localhost:6102/)
  * [Reporting api instance #2](http://localhost:9902/manage/health)
 
-Workers (Spark workers) **Does not used yet**
+Workers (Spark workers)
 * Worker #1
  * [Supervisor for Worker #1](http://localhost:9031/)
+ * [Spark worker #1](http://localhost:8081/)
 * Worker #2
- * [Supervisor for Worker #1](http://localhost:9032/)
+ * [Supervisor for Worker #2](http://localhost:9032/)
+ * [Spark worker #2](http://localhost:8082/)

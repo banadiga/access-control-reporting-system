@@ -72,8 +72,8 @@ Vagrant.configure(2) do |config|
     ah.vm.network :forwarded_port, guest: 8081, host: 6100 # redis-commander
 
     # Spark master
-    ah.vm.network :forwarded_port, guest: 7077, host: 7077 # stripe
-    ah.vm.network :forwarded_port, guest: 8080, host: 8080 # stripe
+    ah.vm.network :forwarded_port, guest: 7077, host: 7077 # spark
+    ah.vm.network :forwarded_port, guest: 8080, host: 8080 # spark
 
     # VM configuration
     ah.vm.provider :virtualbox do |vb|
