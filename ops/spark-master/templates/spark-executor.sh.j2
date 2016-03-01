@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. /usr/lib/spark-1.6.0-bin-hadoop2.6/bin/load-spark-env.sh
+
 export SPARK_LOCAL_IP={{ masterhost }}
 
 trap 'kill -TERM $PID' TERM INT
