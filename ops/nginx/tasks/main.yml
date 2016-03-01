@@ -18,7 +18,7 @@
 
 - name: Create web config
   sudo: yes
-  action: template src=etc-nginx-sites-enabled-web.conf dest=/etc/nginx/sites-enabled/web.conf
+  action: template src=acontrol-web.conf.j2 dest="{{ nginx_sites_enabled }}/acontrol-web.conf"
 
 - name: Create supervisord config
   sudo: yes

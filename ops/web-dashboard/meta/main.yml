@@ -1,0 +1,8 @@
+---
+include:
+  - supervisor/defaults/main.yml
+  - nginx/defaults/main.yml
+dependencies:
+  - host
+  - supervisor
+  - nginx

@@ -1,0 +1,21 @@
+server {
+  listen {{ dashboard_port }};
+
+  server_name localhost;
+
+  root {{ dashboard_base_dir }};
+  index index.html;
+   
+  location {{ dashboard_proxy_location }} {
+    set $request_url $request_uri;
+    if ($request_uri ~ ^{{dashboard_proxy_location}}/(.*)$ ) {
+      set $request_url $1;
+    }
+    proxy_pass $request_url;
+
+    add_header X-uri $request_url;
+
+    proxy_hide_header 'www-authenticate';
+    proxy_redirect    off;
+   }
+}

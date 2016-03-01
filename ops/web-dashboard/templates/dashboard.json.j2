@@ -1,0 +1,221 @@
+{
+  "categories": [
+    {
+      "name": "Application server",
+      "items": [
+        {
+          "name": "Access control Dashboard.",
+          "text": "User Dashboard",
+          "url": "http://10.1.0.100:9999/",
+          "group": [
+            "Master",
+            "aControl"
+          ]
+        },
+        {
+          "name": "Supervisor",
+          "url": "http://10.1.0.100:9001/",
+          "text": "Supervisor Dashboard on master.",
+          "group": [
+            "Master",
+            "Supervisor"
+          ]
+        },
+        {
+          "name": "Redis commander",
+          "url": "http://10.1.0.100:8081/",
+          "text": "Mater node read/write.",
+          "group": [
+            "Master",
+            "Redis"
+          ]
+        },
+        {
+          "name": "Spark master",
+          "text": "Master node.",
+          "url": "http://10.1.0.100:8080/",
+          "group": [
+            "Master",
+            "Spark"
+          ]
+        },
+        {
+          "name": "aControl - Data import",
+          "text": "Jobs to import data from database to parquet file.",
+          "group": [
+            "aControl",
+            "Job"
+          ]
+        },
+        {
+          "name": "aControl - Data analytic",
+          "text": "Jobs to analytic data. Load date from  parquet file and put to redis.",
+          "group": [
+            "aControl",
+            "Job"
+          ]
+        }
+      ],
+      "description": "Mater node"
+    },
+    {
+      "name": "Slave #1",
+      "items": [
+        {
+          "name": "Supervisor",
+          "text": "Supervisor Dashboard on Slave #1.",
+          "url": "http://10.1.0.201:9001/",
+          "group": [
+            "Slave",
+            "Supervisor"
+          ]
+        },
+        {
+          "name": "Redis commander",
+          "text": "Read only.",
+          "url": "http://10.1.0.201:8081/",
+          "group": [
+            "Slave",
+            "Redis"
+          ]
+        },
+        {
+          "name": "Reporting api",
+          "url": "http://10.1.0.201:9900/manage/health",
+          "group": [
+            "Slave",
+            "aControl"
+          ]
+        }
+      ],
+      "description": "Slave Report node"
+    },
+    {
+      "name": "Slave #2",
+      "items": [
+        {
+          "name": "Supervisor",
+          "text": "Supervisor Dashboard on Slave #2.",
+          "url": "http://10.1.0.202:9001/",
+          "group": [
+            "Slave",
+            "Supervisor"
+          ]
+        },
+        {
+          "name": "Redis commander",
+          "text": "Read only.",
+          "url": "http://10.1.0.202:8081/",
+          "group": [
+            "Slave",
+            "Redis"
+          ]
+        },
+        {
+          "name": "Reporting api",
+          "url": "http://10.1.0.202:9900/manage/health",
+          "group": [
+            "Slave",
+            "aControl"
+          ]
+        }
+      ],
+      "visible": false,
+      "description": "Secondary slave Report node"
+    },
+    {
+      "name": "Worker #1",
+      "items": [
+        {
+          "name": "Supervisor",
+          "text": "Supervisor Dashboard on Worker #1.",
+          "url": "http://10.1.0.231:9001/",
+          "group": [
+            "Worker",
+            "Supervisor"
+          ]
+        },
+        {
+          "name": "Spark worker",
+          "text": "Spark worker on Worker #1.",
+          "url": "http://10.1.0.231:8081/",
+          "group": [
+            "Worker",
+            "Spark"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Worker #2",
+      "items": [
+        {
+          "name": "Supervisor",
+          "text": "Supervisor Dashboard on Worker #2.",
+          "url": "http://10.1.0.232:9001/",
+          "group": [
+            "Worker",
+            "Supervisor"
+          ]
+        },
+        {
+          "name": "Spark worker",
+          "text": "Spark worker on Worker #2.",
+          "url": "http://10.1.0.232:8081/",
+          "group": [
+            "Worker",
+            "Spark"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Worker #3",
+      "items": [
+        {
+          "name": "Supervisor",
+          "text": "Supervisor Dashboard on Worker #3.",
+          "url": "http://10.1.0.233:9001/",
+          "group": [
+            "Worker",
+            "Supervisor"
+          ]
+        },
+        {
+          "name": "Spark worker",
+          "text": "Spark worker on Worker #3.",
+          "url": "http://10.1.0.233:8081/",
+          "group": [
+            "Worker",
+            "Spark"
+          ]
+        }
+      ],
+      "visible": false
+    },
+    {
+      "name": "Worker #4",
+      "items": [
+        {
+          "name": "Supervisor",
+          "text": "Supervisor Dashboard on Worker #4.",
+          "url": "http://10.1.0.234:9001/",
+          "group": [
+            "Worker",
+            "Supervisor"
+          ]
+        },
+        {
+          "name": "Spark worker",
+          "text": "Spark worker on Worker #4.",
+          "url": "http://10.1.0.234:8081/",
+          "group": [
+            "Worker",
+            "Spark"
+          ]
+        }
+      ],
+      "visible": false
+    }
+  ]
+}

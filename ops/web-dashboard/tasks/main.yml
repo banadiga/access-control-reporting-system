@@ -1,0 +1,25 @@
+---
+- name: Create web dashboard dir
+  sudo: yes
+  file: path={{ dashboard_base_dir }} state=directory
+
+- name: Download web dashboard
+  sudo: yes
+  get_url: url="http://github.com/banadiga/web-dashboard/releases/download/{{ dashboard_version }}/web-dashboard.tar.gz" dest="{{ dashboard_src_dir }}/web-dashboard.tar.gz"
+
+
+- name: Extract web dashboard distribution
+  sudo: yes
+  unarchive: src="{{ dashboard_src_dir }}/web-dashboard.tar.gz"
+             dest="{{ dashboard_base_dir }}"
+             copy=no
+
+- name: Copy web dashboard config
+  sudo: yes
+  action: template src=dashboard.json.j2 dest="{{ dashboard_base_dir }}/api/dashboard.json" mode=0754
+
+- name: Create nginx config for web dashboard
+  sudo: yes
+  action: template src=web-dashboard.conf.j2 dest="{{ nginx_sites_enabled }}/web-dashboard.conf"
+  notify:
+  - Restarting Supervisor

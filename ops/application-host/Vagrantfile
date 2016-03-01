@@ -66,6 +66,7 @@ Vagrant.configure(2) do |config|
 
     # Nginx as web server and load balancer
     ah.vm.network :forwarded_port, guest: 9999, host: 9999 # nginx
+    ah.vm.network :forwarded_port, guest: 5555, host: 5555 # nginx
 
     # Master redis
     ah.vm.network :forwarded_port, guest: 6379, host: 6379 # redis
@@ -159,9 +160,6 @@ Vagrant.configure(2) do |config|
 
       wk.vm.hostname = "worker-#{worker}"
       wk.vm.box = config.user.box
-
-      # Synced folders
-      wk.vm.synced_folder './../../', '/application-host', :disabled => false # path to application
 
       # Network
       wk.vm.network :private_network, :ip => SLAVE_NETWORK % [230 + worker], :netmask => BRIDGE_NETMASK
