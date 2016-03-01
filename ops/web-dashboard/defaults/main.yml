@@ -1,5 +1,5 @@
 ---
-dashboard_version: v1.0
+dashboard_version: v1.1
 dashboard_port: 5555
 dashboard_proxy_location: /cors-proxy
 dashboard_base_dir: /usr/share/nginx/web-dashboard

@@ -5,12 +5,12 @@
 
 - name: Download web dashboard
   sudo: yes
-  get_url: url="http://github.com/banadiga/web-dashboard/releases/download/{{ dashboard_version }}/web-dashboard.tar.gz" dest="{{ dashboard_src_dir }}/web-dashboard.tar.gz"
+  get_url: url="http://github.com/banadiga/web-dashboard/releases/download/{{ dashboard_version }}/web-dashboard.tar.gz" dest="{{ dashboard_src_dir }}/web-dashboard-{{ dashboard_version }}.tar.gz"
 
 
 - name: Extract web dashboard distribution
   sudo: yes
-  unarchive: src="{{ dashboard_src_dir }}/web-dashboard.tar.gz"
+  unarchive: src="{{ dashboard_src_dir }}/web-dashboard-{{ dashboard_version }}.tar.gz"
              dest="{{ dashboard_base_dir }}"
              copy=no
 
