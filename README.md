@@ -3,6 +3,13 @@ Access control reporting system
 
 ## Set up dev host
 
+#### Install external vagrant plugins
+
+```bash
+vagrant plugin update nugrant
+vagrant plugin update vagrant-hostmanager
+```
+
 #### To start application host:
 
 ```bash

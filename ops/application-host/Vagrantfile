@@ -5,6 +5,10 @@ unless Vagrant.has_plugin?('nugrant')
   warn "[\e[1m\e[31mERROR\e[0m]: Please run: vagrant plugin install nugrant"
   exit -1
 end
+unless Vagrant.has_plugin?('vagrant-hostmanager')
+  warn "[\e[1m\e[31mERROR\e[0m]: Please run: vagrant plugin install vagrant-hostmanager"
+  exit -1
+end
 
 BRIDGE_NETWORK = '10.1.0.100'
 SLAVE_NETWORK = '10.1.0.%s'
@@ -43,6 +47,10 @@ Vagrant.configure(2) do |config|
 
   # Enable ssh forward agent
   config.ssh.forward_agent = true
+
+  # Enable hostmanager
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
 
   # Create Application server
   # ------------------------------------------------------------------------------------------------
@@ -93,7 +101,7 @@ Vagrant.configure(2) do |config|
     # That's a workaround to have the docker command in the PATH and
     # add Vagrant to the docker group by logging in/out
     ah.vm.provision :shell, :inline => "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
-
+    ah.vm.provision :hostmanager
     ah.vm.provision :ansible do |ansible|
       ansible.playbook = "../application-host.yml"
     end
@@ -144,7 +152,7 @@ Vagrant.configure(2) do |config|
       # That's a workaround to have the docker command in the PATH and
       # add Vagrant to the docker group by logging in/out
       sl.vm.provision :shell, :inline => "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
-
+      sl.vm.provision :hostmanager
       sl.vm.provision :ansible do |ansible|
         ansible.playbook = "../slave-host.yml"
       end
@@ -191,7 +199,7 @@ Vagrant.configure(2) do |config|
       # That's a workaround to have the docker command in the PATH and
       # add Vagrant to the docker group by logging in/out
       wk.vm.provision :shell, :inline => "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
-
+      wk.vm.provision :hostmanager
       wk.vm.provision :ansible do |ansible|
         ansible.playbook = "../worker-host.yml"
       end
