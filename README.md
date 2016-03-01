@@ -62,6 +62,10 @@ General:
 * To show report go to [Access control Dashboard](http://localhost:9999/)
 * Mater Redis run at localhost:6000
 
+Dashboard:
+* [Access control Dashboard](http://localhost:9999/)
+* [Admin dashboard](http://localhost:5555/)
+
 Application server:
  * [Supervisor](http://localhost:9000/)
  * [Access control Dashboard](http://localhost:9999/)
